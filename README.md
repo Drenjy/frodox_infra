@@ -86,3 +86,17 @@ gcloud compute firewall-rules create default-puma-server  \
 * `tags` - теги машины *на время создания образа*
 
 Пример переменных приведён в `variables.json.example`.
+Сборка образа:
+
+```
+packer build -var-file=variables.json ubuntu16.json
+```
+
+Так же добавлен конфиг `immutable.json` для создания baked-образа `reddit-full`.
+Конфигурация и настройки - аналогичны. Сборка:
+
+```
+packer build -var-file=variables.json immutable.json
+```
+
+Добавлен скрипт создания VM на основе созданного образа `create-reddit-vm.sh`.

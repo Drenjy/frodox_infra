@@ -1,0 +1,13 @@
+[Unit]
+Description=Pumad server
+After=network.target
+
+[Service]
+Type=forking
+User=appuser
+WorkingDirectory=/home/appuser/reddit
+ExecStart=/usr/local/bin/puma -d
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
