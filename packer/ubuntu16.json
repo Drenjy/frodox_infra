@@ -6,7 +6,8 @@
         "machine_type": "f1-micro",
         "disk_size_gb": "10",
         "disk_gcp_type": "pd-standard",
-        "network_name": "default"
+        "network_name": "default",
+        "tags": "puma-server"
   },
 
   "builders": [
@@ -23,7 +24,7 @@
         "disk_size": "{{user `disk_size_gb`}}",
         "disk_type": "{{user `disk_gcp_type`}}",
         "network": "{{user `network_name`}}",
-        "tags": ["puma-server"]
+        "tags": "{{user `tags`}}"
     }
   ],
 

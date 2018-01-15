@@ -64,5 +64,25 @@ gcloud compute firewall-rules create default-puma-server  \
     --network=default  \
     --action=ALLOW  --rules=tcp:9292  \
     --source-ranges=0.0.0.0/0  \
-    --target-tags=puma-server 
+    --target-tags=puma-server
 ```
+
+
+## Homework 7 (packer)
+
+Добавлен шаблон `ubuntu16.json` для создания образа семейства `reddit-base`,
+который содержит ruby и mongodb.
+
+Переменные обязательные к указанию:
+* `project_id` - project id в GCP, где создавать образ
+* `source_image_family` - семейство базового образа, на котором будет основан наш.
+
+Доступные для перезаписи переменные:
+* `img_description` - описание образа
+* `disk_size_gb` - размер образа
+* `disk_gcp_type` - тип диска
+* `machine_type` - тип машины *на время создания образа*
+* `network_name` - имя используемой сети *на время создания образа*
+* `tags` - теги машины *на время создания образа*
+
+Пример переменных приведён в `variables.json.example`.
