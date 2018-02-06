@@ -120,3 +120,18 @@ packer build -var-file=variables.json immutable.json
 
 При добавлении ssh-ключей в веб-интерфейсе в рамках метаданных проекта, то они будут
 игнорироваться, если на уровне метаданных ВМ используется deprecated опция `sshKeys`.
+
+## Homework 9 (terraform 2)
+
+Описание инфраструктуры разделено на части:
+* `main.tf` - формальность, общий провайдер
+* `app.tf` - описание VM с приложением
+* `db.tf` - описание VM с MongoDB для нашего приложения
+* `vpc.tf` - общие правила для всех VM
+
+Для работы требуется сперва создать образы дисков (app и db) командой
+```bash
+cd packer/
+packer build -var-file=variables.json db.json 
+packer build -var-file=variables.json app.json 
+```
