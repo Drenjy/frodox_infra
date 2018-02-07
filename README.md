@@ -124,10 +124,10 @@ packer build -var-file=variables.json immutable.json
 ## Homework 9 (terraform 2)
 
 Описание инфраструктуры разделено на части:
-* `main.tf` - формальность, общий провайдер
-* `app.tf` - описание VM с приложением
-* `db.tf` - описание VM с MongoDB для нашего приложения
-* `vpc.tf` - общие правила для всех VM
+* `modules/app` - модуль с приложением
+* `modules/db` - модуль с MongoDB
+* `stage/` - настройки ВМ для тестового окружения
+* `prod/` - настройки ВМ для боевого окружения
 
 Для работы требуется сперва создать образы дисков (app и db) командой
 ```bash
@@ -135,3 +135,11 @@ cd packer/
 packer build -var-file=variables.json db.json 
 packer build -var-file=variables.json app.json 
 ```
+
+Далее для использования stage/prod окружения требуется сперва выполнить
+```bash
+terraform init
+terraform get
+```
+
+и создать `terraform.tfvars` со своими данными.

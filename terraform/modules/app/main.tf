@@ -36,6 +36,6 @@ resource "google_compute_firewall" "firewall_puma" {
     ports    = ["9292"]
   }
 
-  source_ranges = ["0.0.0.0/0"]
+  source_ranges = "${var.source_ranges_app}"
   target_tags   = ["reddit-app"]
 }
