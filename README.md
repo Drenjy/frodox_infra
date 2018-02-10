@@ -208,7 +208,7 @@ ansible-playbook reddit_app_multiple_plays.yml --tags deploy-tag
 
 Для деплоя и запуска приложения требуется выполнить:
 ```
-cd terraform/stage
+cd terraform/stage/
 terraform destroy
 terraform apply -auto-approve=true
 
@@ -216,6 +216,31 @@ terraform apply -auto-approve=true
 # исправляем db_host в сценариях
 
 cd ../ansible
+ansible-playbook site.yml
+```
+Проверяем наше приложение по адресу `app_external_ip:9292`.
+
+
+### Интеграция с packer
+
+Для запуска теста интеграции с packer требуется выполнить
+```
+# из корня репозитория
+
+## для создания правила firewall для ssh
+cd terraform/stage/
+terraform apply
+cd ../..
+
+packer build -var-file=packer/variables.json packer/app.json &
+packer build -var-file=packer/variables.json packer/db.json &
+wait
+
+cd ../terraform/stage/
+terraform destroy
+terraform apply
+
+cd ../../ansible/
 ansible-playbook site.yml
 ```
 Проверяем наше приложение по адресу `app_external_ip:9292`.
