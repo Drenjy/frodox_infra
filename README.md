@@ -172,12 +172,33 @@ ansible all -m ping
 Для деплоя и запуска приложения требуется выполнить:
 ```
 cd terraform/stage
-terraform apply
+terraform apply -auto-approve=true
 
-# исправляем ansible/inventory
+# исправляем IP в ansible/inventory
+# исправляем db_host в сценариях
+
 cd ../ansible
 ansible-playbook reddit_app.yml --tags db-tag -l db
 ansible-playbook reddit_app.yml --tags app-tag -l app
 ansible-playbook reddit_app.yml --tags deploy-tag -l app
+```
+Проверяем наше приложение по адресу `app_external_ip:9292`.
+
+
+### Один плейбук, много сценариев
+
+Для деплоя и запуска приложения требуется выполнить:
+```
+cd terraform/stage
+terraform destroy
+terraform apply -auto-approve=true
+
+# исправляем IP в ansible/inventory
+# исправляем db_host в сценариях
+
+cd ../ansible
+ansible-playbook reddit_app.yml --tags db-tag
+ansible-playbook reddit_app.yml --tags app-tag
+ansible-playbook reddit_app.yml --tags deploy-tag
 ```
 Проверяем наше приложение по адресу `app_external_ip:9292`.
