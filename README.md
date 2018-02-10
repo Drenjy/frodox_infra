@@ -132,8 +132,8 @@ packer build -var-file=variables.json immutable.json
 Для работы требуется сперва создать образы дисков (app и db) командой
 ```bash
 cd packer/
-packer build -var-file=variables.json db.json 
-packer build -var-file=variables.json app.json 
+packer build -var-file=variables.json db.json
+packer build -var-file=variables.json app.json
 ```
 
 Далее для использования stage/prod окружения требуется сперва выполнить
@@ -143,3 +143,23 @@ terraform get
 ```
 
 и создать `terraform.tfvars` со своими данными.
+
+
+## Homework 10 (Ansible)
+
+В уроке создана база для дальнейшей реализации подхода IaC.
+
+Для начала работы, установим необходимые пакеты
+```bash
+cd ansible/
+sudo pip install -r requirements.txt
+```
+
+* В `inventory` имеет список хостов в ini формате.
+* В `ansible.cfg` - общие настройки для ansible.
+
+Проверяем доступность всех узлов через
+```
+ansible all -m ping
+```
+Если всё ок, можем вызывать точечные модули под задачи.
