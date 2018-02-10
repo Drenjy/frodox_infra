@@ -178,9 +178,9 @@ terraform apply -auto-approve=true
 # исправляем db_host в сценариях
 
 cd ../ansible
-ansible-playbook reddit_app.yml --tags db-tag -l db
-ansible-playbook reddit_app.yml --tags app-tag -l app
-ansible-playbook reddit_app.yml --tags deploy-tag -l app
+ansible-playbook reddit_app_one_play.yml --tags db-tag -l db
+ansible-playbook reddit_app_one_play.yml --tags app-tag -l app
+ansible-playbook reddit_app_one_play.yml --tags deploy-tag -l app
 ```
 Проверяем наше приложение по адресу `app_external_ip:9292`.
 
@@ -197,8 +197,25 @@ terraform apply -auto-approve=true
 # исправляем db_host в сценариях
 
 cd ../ansible
-ansible-playbook reddit_app.yml --tags db-tag
-ansible-playbook reddit_app.yml --tags app-tag
-ansible-playbook reddit_app.yml --tags deploy-tag
+ansible-playbook reddit_app_multiple_plays.yml --tags db-tag
+ansible-playbook reddit_app_multiple_plays.yml --tags app-tag
+ansible-playbook reddit_app_multiple_plays.yml --tags deploy-tag
+```
+Проверяем наше приложение по адресу `app_external_ip:9292`.
+
+
+### Много плейбуков
+
+Для деплоя и запуска приложения требуется выполнить:
+```
+cd terraform/stage
+terraform destroy
+terraform apply -auto-approve=true
+
+# исправляем IP в ansible/inventory
+# исправляем db_host в сценариях
+
+cd ../ansible
+ansible-playbook site.yml
 ```
 Проверяем наше приложение по адресу `app_external_ip:9292`.
