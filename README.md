@@ -163,3 +163,21 @@ sudo pip install -r requirements.txt
 ansible all -m ping
 ```
 Если всё ок, можем вызывать точечные модули под задачи.
+
+
+## Homework 11 (Ansible)
+
+### Один плейбук, один сценарий
+
+Для деплоя и запуска приложения требуется выполнить:
+```
+cd terraform/stage
+terraform apply
+
+# исправляем ansible/inventory
+cd ../ansible
+ansible-playbook reddit_app.yml --tags db-tag -l db
+ansible-playbook reddit_app.yml --tags app-tag -l app
+ansible-playbook reddit_app.yml --tags deploy-tag -l app
+```
+Проверяем наше приложение по адресу `app_external_ip:9292`.
