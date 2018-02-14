@@ -5,3 +5,4 @@ packer/variables.json
 *.tfvars
 .terraform/
 *.terraform.tfstate.lock.info
+*.retry
