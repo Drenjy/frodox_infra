@@ -244,3 +244,24 @@ cd ../../ansible/
 ansible-playbook site.yml
 ```
 Проверяем наше приложение по адресу `app_external_ip:9292`.
+
+
+## Homework 12 (Ansible)
+
+Используем роли, environment и публичную роль nginx.
+
+* `roles/app` - роль приложения
+* `roles/db` - роль БД
+* `playbooks` - тут хранятся все плейбуки
+
+Параметры по умолчанию для переопределения в `roles/<name>/defaults/*.yml`.
+
+Имеем два окружения - `stage` и `prod`. Запуск на конкретное окружение осуществляется через команду
+
+```
+ansible-playbook playbooks/site.yml -i environments/<env_name>/inventory
+```
+
+По умолчанию (задан в `ansible.cfg`) --- `stage`.
+
+Для роли nginx также открыт в firewall 80-й порт.
