@@ -262,6 +262,22 @@ ansible-playbook site.yml
 ansible-playbook playbooks/site.yml -i environments/<env_name>/inventory
 ```
 
-По умолчанию (задан в `ansible.cfg`) --- `stage`.
+Окружение по умолчанию (задано в `ansible.cfg`) --- `stage`.
+Предварительно необходимо установить зависимости для окружения из Ansible Galaxy:
+
+```
+ansible-galaxy install -r environments/<env_name>/requirements.yml
+```
 
 Для роли nginx также открыт в firewall 80-й порт.
+
+
+Установка зависимостей:
+
+```
+cd ansible
+virtualenv-2.7 .venv
+source .venv/bin/activate
+pip2 install --upgrade pip
+pip2 install -r requirements.txt
+```
