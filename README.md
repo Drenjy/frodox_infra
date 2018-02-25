@@ -272,7 +272,25 @@ ansible-galaxy install -r environments/<env_name>/requirements.yml
 Для роли nginx также открыт в firewall 80-й порт.
 
 
-Установка зависимостей:
+## Homework 13 (Ansible)
+
+### Настройка Vagrant окружения для локального тестирования
+
+В ходе ДЗ был добавлен `ansible/Vagrantfile` для локального тестирования
+инфраструктуры (и деплоя через ansible). 
+Команды управление инфрой (из каталога `ansible`):
+
+* `vagrant up` --- поднять виртуальное окружение
+* `vagrant destroy -f` --- удалить окружение
+* `vagrant status` --- посмотреть статус - поднятые хосты и т.п.
+* `vagrant ssh <host>` --- подключиться по ssh к указанному хосту
+
+Так же добавлен `playbooks/base.yml` для установки python для ansible через raw-модуль, на тот случай, там где его нет.
+
+
+### Тестирование ansible роли
+
+Для тестирования ролей ansible используется утилита Molucule и фреймворк Testinfra. Сперва необходимо подготовить окружение, установив зависимости:
 
 ```
 cd ansible
@@ -280,4 +298,26 @@ virtualenv-2.7 .venv
 source .venv/bin/activate
 pip2 install --upgrade pip
 pip2 install -r requirements.txt
+```
+
+Затем можем переходить непосредственно к тестированию. Основные команды и файлы:
+
+* `molecule init scenario --scenario-name default -r db -d vagrant` --- инициализация окружения для тестирования конкретной роли с драйвером vagrant (выполняется из каталога роли)
+* `db/molecule/default/tests/test_default.py` --- тесты роли. Пишутся с использованием флеймворка 
+* `db/molecule/default/molecule.yml` --- описание машины, которая создаётся Molecule для тестов
+* `db/molecule/default/playbook.yml` --- плейбук для вызова нашей роли, которую мы тестируем
+* `molecule create` --- создание и запуск машины для тестов
+* `molecule list` --- список созданных инстансов
+* `molecule converge` --- применение конфигурации `playbook.yml` к созданной машине
+* `molecule verify` --- запуск и проверка всех тестов
+
+
+### Адаптация packer под новую ansible-структуру
+
+Вызов packer остался неизменен. Изменились json-шаблоны.
+
+```
+# из корневого каталога репозитория
+packer build -var-file=packer/variables.json packer/app.json
+packer build -var-file=packer/variables.json packer/db.json
 ```
