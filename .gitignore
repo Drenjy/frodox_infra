@@ -7,3 +7,12 @@ packer/variables.json
 *.terraform.tfstate.lock.info
 *.retry
 jdauphant.nginx
+
+# Vagrant & molecule
+.vagrant/
+*.log
+*.pyc
+.molecule
+.cache
+.venv
+.pytest_cache
